@@ -27,13 +27,13 @@ typedef struct
 
 
 
-void inicializarPerritos(sPerro* listaPerros, int lengthPerros);
-void sPerro_hardcodeo(sPerro* listaPerros, int lengthPerros);
-void mostrarPerro(sPerro* listaPerros, int index);
-void mostrarListaPerros(sPerro* listaPerros, int lengthPerros);
-void listarPerros(sPerro* listaPerros, int lengthPerros, int contadorAltas);
-int cargarPerritoPorId(sPerro* listaPerros, int lengthPerros, int index);
-int calcularPromedioEdadPerros(sPerro* listaPerros, int lengthPerros, int contadorAltas);
+void sPerro_inicializarPerritos(sPerro* listaPerros, int lengthPerros);
+void sPerro_hardcodearPerros(sPerro* listaPerros, int lengthPerros);
+void sPerro_mostrarPerro(sPerro* listaPerros, int index);
+void sPerro_mostrarListaPerros(sPerro* listaPerros, int lengthPerros);
+void sPerro_listarPerros(sPerro* listaPerros, int lengthPerros, int contadorAltas);
+int sPerro_cargarPerritoPorId(sPerro* listaPerros, int lengthPerros, int index);
+int sPerro_calcularPromedioEdadPerros(sPerro* listaPerros, int lengthPerros, int contadorAltas);
 
 
 

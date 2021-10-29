@@ -10,13 +10,18 @@
 
 
 
+
+
 /**
- * @fn void mainMenu(sEstadiaDiaria*, sPerro*, int)
- * @brief [Menu Principal - Donde se pueden realizar las acciones correspondientes o finalizar el programa]
+ * @fn void mainMenu(sEstadiaDiaria*, sPerro*, sDuenio*, int, int, int)
+ * @brief [MAIN MENU - Donde se pueden realizar las acciones correspondientes o finalizar el programa]
  *
  * @param listaEstadias
  * @param listaPerros
- * @param length
+ * @param listaDuenios
+ * @param lengthPerros
+ * @param lengthEstadias
+ * @param lengthDuenios
  */
 void mainMenu(sEstadiaDiaria* listaEstadias, sPerro* listaPerros, sDuenio* listaDuenios, int lengthPerros, int lengthEstadias, int lengthDuenios)
 {
@@ -74,11 +79,11 @@ void mainMenu(sEstadiaDiaria* listaEstadias, sPerro* listaPerros, sDuenio* lista
 					break;
 
 				case 5:
-					listarPerros(listaPerros, lengthPerros, contadorAltas);
+					sPerro_listarPerros(listaPerros, lengthPerros, contadorAltas);
 					break;
 
 				case 6:
-					calcularPromedioEdadPerros(listaPerros, lengthPerros, contadorAltas);
+					sPerro_calcularPromedioEdadPerros(listaPerros, lengthPerros, contadorAltas);
 					break;
 
 				case 7:
@@ -102,14 +107,19 @@ void mainMenu(sEstadiaDiaria* listaEstadias, sPerro* listaPerros, sDuenio* lista
 
 
 
+
+
 /**
- * @fn void agregarEstadia(sEstadiaDiaria*, sPerro*, int, int*, int*)
- * @brief [Agregar Estadia - Busca el espacio libre e invoca a la funcion para cargar los datos de la estadia;
+ * @fn void agregarEstadia(sEstadiaDiaria*, sPerro*, sDuenio*, int, int, int, int*, int*)
+ * @brief [AGREGAR ESTADIA - Busca el espacio libre e invoca a la funcion para cargar los datos de la estadia;
  * ademas incrementa el contador de estadias y el contador de ID's]
  *
  * @param listaEstadias
- * @param perritos
- * @param length
+ * @param listaPerros
+ * @param listaDuenios
+ * @param lengthEstadias
+ * @param lengthPerros
+ * @param lengthDuenios
  * @param contadorId
  * @param contadorAltas
  */
@@ -120,7 +130,7 @@ void agregarEstadia(sEstadiaDiaria* listaEstadias, sPerro* listaPerros, sDuenio*
 	if ( (listaEstadias != NULL && listaPerros != NULL && listaPerros != NULL) && (lengthPerros > -1 && lengthEstadias > -1 && lengthDuenios > -1) )
 	{
 
-		index = buscarEspacioLibre(listaEstadias, lengthPerros);
+		index = sEstadiaDiaria_buscarEspacioLibre(listaEstadias, lengthPerros);
 
 		if ( (index != -1) && (!cargarDatosDeEstadia(listaEstadias, listaPerros, listaDuenios, lengthPerros, lengthEstadias, lengthDuenios, index, contadorId)) )
 		{
@@ -146,16 +156,21 @@ void agregarEstadia(sEstadiaDiaria* listaEstadias, sPerro* listaPerros, sDuenio*
 
 
 
+
+
 /**
- * @fn int cargarDatosDeEstadia(sEstadiaDiaria*, sPerro*, int, int, int*)
- * @brief [Cargar Datos de Estadia - Carga los datos de la estadia que el usuario ingresa en el sistema]
+ * @fn int cargarDatosDeEstadia(sEstadiaDiaria*, sPerro*, sDuenio*, int, int, int, int, int*)
+ * @brief [CARGAR DATOS DE ESTADIA - Carga los datos de la estadia que el usuario ingresa en el sistema]
  *
  * @param listaEstadias
  * @param listaPerros
- * @param length
+ * @param listaDuenios
+ * @param lengthEstadias
+ * @param lengthPerros
+ * @param lengthDuenios
  * @param index
  * @param contadorId
- * @return Value (Numero Entero): [-1] si hubo un error / [0] si la estadia se cargo correctamente en el sistema.
+ * @return
  */
 int cargarDatosDeEstadia(sEstadiaDiaria* listaEstadias, sPerro* listaPerros, sDuenio* listaDuenios, int lengthEstadias, int lengthPerros, int lengthDuenios, int index, int* contadorId)
 {
@@ -166,11 +181,11 @@ int cargarDatosDeEstadia(sEstadiaDiaria* listaEstadias, sPerro* listaPerros, sDu
 			"Por favor complete los siguientes datos:\n"
 			"---------------------------------------------------------------------------------------------------------------------------------\n");
 
-	pedirFecha(listaEstadias, index);
+	sEstadiaDiaria_pedirFecha(listaEstadias, index);
 
 	listaEstadias[index].id = generarId(*contadorId);
-	listaEstadias[index].idDuenio = duenio_cargarId(listaDuenios, lengthDuenios);
-	listaEstadias[index].idPerro = cargarPerritoPorId(listaPerros, lengthPerros, index);
+	listaEstadias[index].idDuenio = sDuenio_cargarId(listaDuenios, lengthDuenios);
+	listaEstadias[index].idPerro = sPerro_cargarPerritoPorId(listaPerros, lengthPerros, index);
 
 	listaEstadias[index].espacioVacio = FALSE;
 
@@ -189,17 +204,20 @@ int cargarDatosDeEstadia(sEstadiaDiaria* listaEstadias, sPerro* listaPerros, sDu
 
 
 
+
 /**
- * @fn void modificarEstadia(sEstadiaDiaria*, sPerro*, int, int, int)
- * @brief [Modificar Estadia - Si el contador de estadias/altas es mayor a cero, permite la modificacion de los datos de la estadia]
+ * @fn void modificarEstadia(sEstadiaDiaria*, sPerro*, sDuenio*, int, int, int, int, int)
+ * @brief [MODIFICAR ESTADIA - Si el contador de estadias/altas es mayor a cero, permite la modificacion de los datos de la estadia]
  *
  * @param listaEstadias
  * @param listaPerros
- * @param length
+ * @param listaDuenios
+ * @param lengthEstadias
+ * @param lengthPerros
+ * @param lengthDuenios
  * @param contadorId
  * @param contadorAltas
  */
-
 void modificarEstadia(sEstadiaDiaria* listaEstadias, sPerro* listaPerros, sDuenio* listaDuenios, int lengthEstadias, int lengthPerros, int lengthDuenios, int contadorId, int contadorAltas)
 {
 	int id;
@@ -217,7 +235,7 @@ void modificarEstadia(sEstadiaDiaria* listaEstadias, sPerro* listaPerros, sDueni
 				mostrarListaEstadias(listaEstadias, listaPerros, listaDuenios, lengthEstadias, lengthPerros, lengthDuenios);
 
 				id = getNumeroMayorQueMinimo("Ingrese el ID de la estadia que desea modificar: ", "ERROR! El ID no existe. Por favor reingrese un ID valido: ", ID);
-				indexDelId = buscarEstadiaPorId(listaEstadias, lengthEstadias, id);
+				indexDelId = sEstadiaDiaria_buscarEstadiaPorId(listaEstadias, lengthEstadias, id);
 
 				if (indexDelId != -1)
 				{
@@ -262,16 +280,21 @@ void modificarEstadia(sEstadiaDiaria* listaEstadias, sPerro* listaPerros, sDueni
 }
 
 
+
+
+
 /**
- * @fn void modificarEstadiaMenu(sEstadiaDiaria*, sPerro*, int, int)
- * @brief [Modificar Estadia Menu - Despliega un menu de opciones para modificar telefono de contacto, modificar perro, o volver al menu anterior.]
+ * @fn void modificarEstadiaMenu(sEstadiaDiaria*, sPerro*, sDuenio*, int, int, int, int)
+ * @brief [MODIFICAR ESTADIA MENU - Despliega un menu de opciones para modificar telefono de contacto, modificar perro, o volver al menu anterior]
  *
  * @param listaEstadias
  * @param listaPerros
- * @param length
+ * @param listaDuenios
+ * @param lengthEstadias
+ * @param lengthPerros
+ * @param lengthDuenios
  * @param index
  */
-
 void modificarEstadiaMenu(sEstadiaDiaria* listaEstadias, sPerro* listaPerros, sDuenio* listaDuenios, int lengthEstadias, int lengthPerros, int lengthDuenios, int index)
 {
 	int option;
@@ -284,7 +307,7 @@ void modificarEstadiaMenu(sEstadiaDiaria* listaEstadias, sPerro* listaPerros, sD
 								 "3. Volver\n\n\n",
 
 								 "---------------------------------------------------------------------------------------------------------------------------------\n"
-								 "ERROR ! Opcion invalida\n"
+								 "ERROR! Opcion invalida\n"
 								 "Que desea modificar?\n"
 								 "---------------------------------------------------------------------------------------------------------------------------------\n"
 								 "1. Telefono de contacto\n"
@@ -309,13 +332,26 @@ void modificarEstadiaMenu(sEstadiaDiaria* listaEstadias, sPerro* listaPerros, sD
 
 
 
+/**
+ * @fn void modificarTelefonoDeContacto(sEstadiaDiaria*, sDuenio*, int, int, int)
+ * @brief [MODIFICAR TELEFONO DE CONTACTO - Modificacion de los datos de telefono de la estadia reservada con opcion de telefono de linea o celular posterior carga de la misma en el sistema]
+ *
+ * @param listaEstadias
+ * @param listaDuenios
+ * @param lengthEstadias
+ * @param lengthDuenios
+ * @param index
+ */
 void modificarTelefonoDeContacto(sEstadiaDiaria* listaEstadias, sDuenio* listaDuenios, int lengthEstadias, int lengthDuenios, int index)
 {
-	int option = getIntInMinMaxRange("Ingrese la opcion correspondiente:\n"
+	int auxTelefono;
+	int option = getIntInMinMaxRange("Ingrese la opcion correspondiente\n"
+									 "---------------------------------------------------------------------------------------------------------------------------------\n"
 									 "1. Telefono de linea\n"
 									 "2. Celular\n\n\n",
 
-									 "ERROR ! La opcion ingresada no es valida. Reingrese la opcion correspondiente:\n"
+									 "ERROR! <<La opcion ingresada no es valida. Reingrese la opcion correspondiente\n"
+									 "---------------------------------------------------------------------------------------------------------------------------------\n"
 									 "1. Telefono de linea\n"
 									 "2. Celular\n\n\n", 1, 2);
 
@@ -332,7 +368,23 @@ void modificarTelefonoDeContacto(sEstadiaDiaria* listaEstadias, sDuenio* listaDu
 				{
 					if (listaEstadias[i].idDuenio == listaDuenios[j].id)
 					{
-						listaDuenios[j].telefono = getIntInMinMaxRange("Ingrese telefono de linea (8 digitos): ", "ERROR !\nPor favor reingrese telefono de linea (Debe tener 8 digitos): ", 10000000, 99999999);
+						auxTelefono = getIntInMinMaxRange("Ingrese telefono de linea (8 digitos): ", "ERROR !\nPor favor reingrese telefono de linea (Debe tener 8 digitos): ", 10000000, 99999999);
+
+						if (verificarModificacionDeEstadia() == 1)
+						{
+							listaDuenios[j].telefono = auxTelefono;
+
+							printf("\n********************************************************************************************************************************************\n\n"
+								   "Has cambiado el telefono de contacto!\n\n"
+								   "********************************************************************************************************************************************\n\n\n");
+						}
+						else
+						{
+							printf("\n********************************************************************************************************************************************\n\n"
+									"No has hecho cambios en las estadias\n\n"
+									"********************************************************************************************************************************************\n\n\n");
+						}
+
 						break;
 					}
 				}
@@ -352,7 +404,23 @@ void modificarTelefonoDeContacto(sEstadiaDiaria* listaEstadias, sDuenio* listaDu
 				{
 					if (listaEstadias[i].idDuenio == listaDuenios[j].id)
 					{
-						listaDuenios[j].telefono = getIntInMinMaxRange("Ingrese celular (10 digitos): ", "ERROR !\nPor favor reingrese celular (Debe tener 10 digitos): ", 1000000000, 1999999999);
+						auxTelefono = getIntInMinMaxRange("Ingrese celular (10 digitos): ", "ERROR !\nPor favor reingrese celular (Debe tener 10 digitos): ", 1000000000, 1999999999);
+
+						if (verificarModificacionDeEstadia() == 1)
+						{
+							listaDuenios[j].telefono = auxTelefono;
+
+							printf("\n********************************************************************************************************************************************\n\n"
+								   "Has cambiado el telefono de contacto!\n\n"
+								   "********************************************************************************************************************************************\n\n\n");
+						}
+						else
+						{
+							printf("\n********************************************************************************************************************************************\n\n"
+									"No has hecho cambios en las estadias\n\n"
+									"********************************************************************************************************************************************\n\n\n");
+						}
+
 						break;
 					}
 				}
@@ -364,9 +432,7 @@ void modificarTelefonoDeContacto(sEstadiaDiaria* listaEstadias, sDuenio* listaDu
 
 
 
-	printf("\n********************************************************************************************************************************************\n\n"
-		   "Has cambiado el telefono de contacto!\n\n"
-		   "********************************************************************************************************************************************\n\n\n");
+
 
 	system("pause");
 
@@ -377,15 +443,13 @@ void modificarTelefonoDeContacto(sEstadiaDiaria* listaEstadias, sDuenio* listaDu
 
 
 /**
- * @fn void modificarPerro(sPerro*, sEstadiaDiaria*, int, int)
- * @brief [Modificar Perro - Menu de modificacion del perro de la estadia segun opcion elegida por el usuario y posterior carga de la misma en el sistema]
+ * @fn void modificarPerro(sPerro*, sEstadiaDiaria*, int)
+ * @brief [MODIFICAR PERRO - Menu de modificacion del perro de la estadia segun opcion elegida por el usuario y posterior carga de la misma en el sistema]
  *
  * @param listaPerros
  * @param listaEstadias
- * @param length
  * @param index
  */
-
 void modificarPerro(sPerro* listaPerros, sEstadiaDiaria* listaEstadias, int index)
 {
 
@@ -400,7 +464,7 @@ void modificarPerro(sPerro* listaPerros, sEstadiaDiaria* listaEstadias, int inde
 												"3. Reina\n\n\n", 1, 3);
 
 
-	if (verificarModificacionPerro() == 1)
+	if (verificarModificacionDeEstadia() == 1)
 	{
 		switch (perroSeleccionado)
 		{
@@ -419,13 +483,13 @@ void modificarPerro(sPerro* listaPerros, sEstadiaDiaria* listaEstadias, int inde
 
 
 		printf("\n********************************************************************************************************************************************\n\n"
-				"Los cambios han sido guardados !\n\n"
+				"Has cambiado el perro de la estadia!\n\n"
 				"********************************************************************************************************************************************\n\n\n");
 	}
 	else
 	{
 		printf("\n********************************************************************************************************************************************\n\n"
-				"Se han restaurado los cambios !\n\n"
+				"No has hecho cambios en las estadias\n\n"
 				"********************************************************************************************************************************************\n\n\n");
 
 	}
@@ -437,16 +501,19 @@ void modificarPerro(sPerro* listaPerros, sEstadiaDiaria* listaEstadias, int inde
 
 
 
+
 /**
- * @fn void cancelarEstadia(sEstadiaDiaria*, sPerro*, int, int*)
- * @brief [Cancelar Estadia - Si el contador de estadias/altas es mayor a cero, permite la eliminacion de una estadia cargada en el sistema. Posee su propio submenu]
+ * @fn void cancelarEstadia(sEstadiaDiaria*, sPerro*, sDuenio*, int, int, int, int*)
+ * @brief [CANCELAR ESTADIA - Si el contador de estadias/altas es mayor a cero, permite la eliminacion de una estadia cargada en el sistema. Posee su propio submenu]
  *
  * @param listaEstadias
  * @param listaPerros
- * @param length
+ * @param listaDuenios
+ * @param lengthEstadias
+ * @param lengthPerros
+ * @param lengthDuenios
  * @param contadorAltas
  */
-
 void cancelarEstadia(sEstadiaDiaria* listaEstadias, sPerro* listaPerros, sDuenio* listaDuenios, int lengthEstadias, int lengthPerros, int lengthDuenios, int* contadorAltas)
 {
 	int id;
@@ -462,24 +529,29 @@ void cancelarEstadia(sEstadiaDiaria* listaEstadias, sPerro* listaPerros, sDuenio
 			{
 				mostrarListaEstadias(listaEstadias, listaPerros, listaDuenios, lengthEstadias, lengthPerros, lengthDuenios);
 				id = getNumeroMayorQueMinimo("Ingrese el ID de la estadia que desea cancelar: ", "ERROR! El ID no es valido... Por favor reingrese un ID valido: ", ID);
-				indexDelId = buscarEstadiaPorId(listaEstadias, lengthEstadias, id);
+				indexDelId = sEstadiaDiaria_buscarEstadiaPorId(listaEstadias, lengthEstadias, id);
 
 				if (indexDelId != -1)
 				{
-					if (verificarCancelacionDeEstadia())
+					if (verificarCancelacionDeEstadia() == 1)
 					{
-						removerEstadia(listaEstadias, lengthEstadias, id);
+						sEstadiaDiaria_removerEstadia(listaEstadias, lengthEstadias, id);
 						(*contadorAltas)--;
 
 						printf("\n\n********************************************************************************************************************************************\n\n"
 								"Has cancelado la estadia !\n\n"
 								"********************************************************************************************************************************************\n\n\n");
 
+						system("pause");
+
 					}
 					else
 					{
-						printf("\n\nNo has hecho cambios en las estadias\n"
-								"---------------------------------------------------------------------------------------------------------------------------------\n\n\n");
+						printf("\n********************************************************************************************************************************************\n\n"
+								"No has hecho cambios en las estadias\n\n"
+								"********************************************************************************************************************************************\n\n\n");
+
+						system("pause");
 					}
 
 
@@ -488,7 +560,7 @@ void cancelarEstadia(sEstadiaDiaria* listaEstadias, sPerro* listaPerros, sDuenio
 												 "1. Seguir cancelando estadias\n"
 												 "2. Volver al Menu Principal\n\n",
 
-												 "ERROR! Opcion Invalida. Reingrese de nuevo la operacion a realizar\n"
+												 "ERROR! <<Opcion Invalida>> Reingrese una opcion valida...\n"
 												 "---------------------------------------------------------------------------------------------------------------------------------\n"
 												 "1. Seguir cancelando estadias\n"
 												 "2. Volver al Menu Principal\n", 1, 2);
@@ -532,15 +604,20 @@ void cancelarEstadia(sEstadiaDiaria* listaEstadias, sPerro* listaPerros, sDuenio
 
 
 
+
 /**
- * @fn void mostrarEstadia(sEstadiaDiaria*, sPerro*, int, int, int)
- * @brief [Mostrar Estadia - Muestra la carga individual de una estadia en particular segun subindices de los arrays de cada estructura]
+ * @fn void mostrarEstadia(sEstadiaDiaria*, sPerro*, sDuenio*, int, int, int, int, int, int)
+ * @brief [MOSTRAR ESTADIA - Muestra la carga individual de una estadia en particular segun subindices de los arrays de cada estructura]
  *
- * @param estadias
- * @param listaPerritos
- * @param length
- * @param i
- * @param j
+ * @param listaEstadias
+ * @param listaPerros
+ * @param listaDuenios
+ * @param lengthEstadias
+ * @param lengthPerros
+ * @param lengthDuenios
+ * @param indexEstadias
+ * @param indexPerros
+ * @param indexDuenios
  */
 void mostrarEstadia(sEstadiaDiaria* listaEstadias, sPerro* listaPerros, sDuenio* listaDuenios, int lengthEstadias, int lengthPerros, int lengthDuenios, int indexEstadias, int indexPerros, int indexDuenios)
 {
@@ -562,14 +639,16 @@ void mostrarEstadia(sEstadiaDiaria* listaEstadias, sPerro* listaPerros, sDuenio*
 
 
 
-
 /**
- * @fn void mostrarListaEstadias(sEstadiaDiaria*, sPerro*, int)
- * @brief [Mostrar Lista Estadias - Muestra el total de estadias cargadas en el sistema]
+ * @fn void mostrarListaEstadias(sEstadiaDiaria*, sPerro*, sDuenio*, int, int, int)
+ * @brief [MOSTRAR LISTA ESTADIAS - Muestra el total de estadias cargadas en el sistema]
  *
- * @param estadias
- * @param listaPerritos
- * @param length
+ * @param listaEstadias
+ * @param listaPerros
+ * @param listaDuenios
+ * @param lengthEstadias
+ * @param lengthPerros
+ * @param lengthDuenios
  */
 void mostrarListaEstadias(sEstadiaDiaria* listaEstadias, sPerro* listaPerros, sDuenio* listaDuenios, int lengthEstadias, int lengthPerros, int lengthDuenios)
 {
@@ -619,16 +698,17 @@ void mostrarListaEstadias(sEstadiaDiaria* listaEstadias, sPerro* listaPerros, sD
 
 
 /**
- * @fn void listarEstadias(sEstadiaDiaria*, sPerro*, int, int)
- * @brief [Listar Estadias - Si el contador de estadias/altas es mayor que cero, ofrece el listado de las estadias ordenado]
+ * @fn void listarEstadias(sEstadiaDiaria*, sPerro*, sDuenio*, int, int, int, int)
+ * @brief [LISTAR ESTADIAS - Si el contador de estadias/altas es mayor que cero, ofrece el listado de las estadias ordenado]
  *
- * @param estadias
+ * @param listaEstadias
  * @param listaPerros
- * @param length
+ * @param listaDuenios
+ * @param lengthEstadias
+ * @param lengthPerros
+ * @param lengthDuenios
  * @param contadorAltas
  */
-
-
 void listarEstadias(sEstadiaDiaria* listaEstadias, sPerro* listaPerros, sDuenio* listaDuenios, int lengthEstadias, int lengthPerros, int lengthDuenios, int contadorAltas)
 {
 
@@ -660,6 +740,16 @@ void listarEstadias(sEstadiaDiaria* listaEstadias, sPerro* listaPerros, sDuenio*
 
 
 
+
+/**
+ * @fn void listarEstadiasPorFechaDescendente(sEstadiaDiaria*, sDuenio*, int, int)
+ * @brief [LISTAR ESTADIAS POR FECHA DESCENDENTE - Ordenamiento de los datos de las estadias reservadas, por orden de fechas descendente y por nombre del duenio en caso de misma fecha]
+ *
+ * @param listaEstadias
+ * @param listaDuenios
+ * @param lengthEstadias
+ * @param lengthDuenios
+ */
 void listarEstadiasPorFechaDescendente(sEstadiaDiaria* listaEstadias, sDuenio* listaDuenios, int lengthEstadias, int lengthDuenios)
 {
 	int limite = lengthEstadias - 1;
@@ -763,6 +853,18 @@ void listarEstadiasPorFechaDescendente(sEstadiaDiaria* listaEstadias, sDuenio* l
 
 
 
+/**
+ * @fn void calcularYMostrarPerroConMasEstadias(sPerro*, sEstadiaDiaria*, sDuenio*, int, int, int, int)
+ * @brief [CALCULAR Y MOSTRAR PERRO CON MAS ESTADIAS - Determina cual de los perros es el que tiene mas estadias reservadas en el sistema para luego mostrarlo]
+ *
+ * @param listaPerros
+ * @param listaEstadias
+ * @param listaDuenios
+ * @param lengthPerros
+ * @param lengthEstadias
+ * @param lengthDuenios
+ * @param contadorAltas
+ */
 void calcularYMostrarPerroConMasEstadias(sPerro* listaPerros, sEstadiaDiaria* listaEstadias, sDuenio* listaDuenios, int lengthPerros, int lengthEstadias, int lengthDuenios, int contadorAltas)
 {
 	int contadorEstadiasLobo = 0;
@@ -836,6 +938,19 @@ void calcularYMostrarPerroConMasEstadias(sPerro* listaPerros, sEstadiaDiaria* li
 
 
 
+
+/**
+ * @fn void mostrarPerroConMasEstadias(sPerro*, sEstadiaDiaria*, sDuenio*, int, int, int, int)
+ * @brief [MOSTRAR PERRO CON MAS ESTADIAS - Muestra el perro que tenga mas estadias reservadas cargadas en el sistema]
+ *
+ * @param listaPerros
+ * @param listaEstadias
+ * @param listaDuenios
+ * @param lengthPerros
+ * @param lengthEstadias
+ * @param lengthDuenios
+ * @param indexPerro
+ */
 void mostrarPerroConMasEstadias(sPerro* listaPerros, sEstadiaDiaria* listaEstadias, sDuenio* listaDuenios, int lengthPerros, int lengthEstadias, int lengthDuenios, int indexPerro)
 {
 
@@ -856,10 +971,10 @@ void mostrarPerroConMasEstadias(sPerro* listaPerros, sEstadiaDiaria* listaEstadi
 				{
 
 					printf("%-20s %-20d %d/%d/%d\n", listaDuenios[j].nombre,
-													   listaDuenios[j].telefono,
-													   listaEstadias[i].fecha.dia,
-													   listaEstadias[i].fecha.mes,
-													   listaEstadias[i].fecha.anio);
+												     listaDuenios[j].telefono,
+												     listaEstadias[i].fecha.dia,
+												     listaEstadias[i].fecha.mes,
+												     listaEstadias[i].fecha.anio);
 
 				}
 			}
@@ -872,7 +987,18 @@ void mostrarPerroConMasEstadias(sPerro* listaPerros, sEstadiaDiaria* listaEstadi
 
 
 
-
+/**
+ * @fn void mostrarPerroConSusEstadias(sPerro*, sEstadiaDiaria*, sDuenio*, int, int, int, int)
+ * @brief [MOSTRAR PERRO CON SUS ESTADIAS - Muestra todos los perros con todas sus estadias reservadas cargadas en el sistema]
+ *
+ * @param listaPerros
+ * @param listaEstadias
+ * @param listaDuenios
+ * @param lengthPerros
+ * @param lengthEstadias
+ * @param lengthDuenios
+ * @param contadorAltas
+ */
 void mostrarPerroConSusEstadias(sPerro* listaPerros, sEstadiaDiaria* listaEstadias, sDuenio* listaDuenios, int lengthPerros, int lengthEstadias, int lengthDuenios, int contadorAltas)
 {
 
@@ -936,17 +1062,12 @@ void mostrarPerroConSusEstadias(sPerro* listaPerros, sEstadiaDiaria* listaEstadi
 
 
 
-
-
-
-
-
 /**
  * @fn int generarId(int)
- * @brief [Generar ID - Genera un ID a partir del DEFINE ID y de la cantidad de ID's registrados]
+ * @brief [GENERAR ID - Genera un ID a partir del DEFINE ID y de la cantidad de ID's registrados]
  *
  * @param contadorId
- * @return El ID generado (NUMERO ENTERO)
+ * @return
  */
 int generarId(int contadorId)
 {

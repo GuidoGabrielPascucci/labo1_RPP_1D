@@ -14,13 +14,13 @@
 
 
 /**
- * @fn void inicializarEstadias(sEstadiaDiaria*, int)
- * @brief [Inicializar Estadias - Pone a todos los campos 'espacio vacio' de la estructura Estadias en VERDADERO(1)]
+ * @fn void sEstadiaDiaria_inicializarEstadias(sEstadiaDiaria*, int)
+ * @brief [sEstadiaDiaria_ INICIALIZAR ESTADIAS - Pone a todos los campos 'espacioVacio' de la estructura Estadias en TRUE[1]]
  *
  * @param listaEstadias
- * @param length
+ * @param lengthEstadias
  */
-void inicializarEstadias(sEstadiaDiaria* listaEstadias, int lengthEstadias)
+void sEstadiaDiaria_inicializarEstadias(sEstadiaDiaria* listaEstadias, int lengthEstadias)
 {
 
 	if (listaEstadias != NULL && lengthEstadias > -1)
@@ -45,14 +45,14 @@ void inicializarEstadias(sEstadiaDiaria* listaEstadias, int lengthEstadias)
 
 
 /**
- * @fn int buscarEspacioLibre(sEstadiaDiaria*, int)
- * @brief [Buscar Espacio Libre - busca el espacio vacio en el campo 'espacio vacio' del array de estadias]
+ * @fn int sEstadiaDiaria_buscarEspacioLibre(sEstadiaDiaria*, int)
+ * @brief [sEstadiaDiaria BUSCAR ESPACIO LIBRE - Busca el espacio vacio en el campo 'espacioVacio' del array de estadias]
  *
  * @param listaEstadias
- * @param length
- * @return Retorna el INDEX (NUMERO ENTERO) del primer espacio vacio que encuentra en el array de estadias
+ * @param lengthEstadias
+ * @return Retorna un NUMERO ENTERO, que es el INDEX del primer espacio vacio que encuentra en el array de estadias
  */
-int buscarEspacioLibre(sEstadiaDiaria* listaEstadias, int lengthEstadias)
+int sEstadiaDiaria_buscarEspacioLibre(sEstadiaDiaria* listaEstadias, int lengthEstadias)
 {
 	int index = -1;
 
@@ -72,16 +72,14 @@ int buscarEspacioLibre(sEstadiaDiaria* listaEstadias, int lengthEstadias)
 
 
 
-
-
 /**
- * @fn void pedirFecha(sEstadiaDiaria*, int)
- * @brief [Pedir Fecha - Pide el dia, mes y anio de la estadia al usuario para cargarla en sistema]
+ * @fn void sEstadiaDiaria_pedirFecha(sEstadiaDiaria*, int)
+ * @brief [sEstadiaDiaria PEDIR FECHA - Pide el dia, mes y anio de la estadia al usuario para cargarla en sistema]
  *
  * @param listaEstadias
  * @param index
  */
-void pedirFecha(sEstadiaDiaria* listaEstadias, int index)
+void sEstadiaDiaria_pedirFecha(sEstadiaDiaria* listaEstadias, int index)
 {
 
 	listaEstadias[index].fecha.dia = getIntInMinMaxRange("\nIngrese el dia de estadia: ", "ERROR ! Fecha no valida. Por favor reingrese el dia de estadia: ", 1, 31);
@@ -94,17 +92,15 @@ void pedirFecha(sEstadiaDiaria* listaEstadias, int index)
 
 
 
-
 /**
- * @fn int removerEstadia(sEstadiaDiaria*, int, int)
- * @brief [Remover Estadia - Realiza la baja logica de la estadia poniendo en VERDADERO(1) un determinado subindice del campo 'espacio vacio' del array de estadias]
+ * @fn void sEstadiaDiaria_removerEstadia(sEstadiaDiaria*, int, int)
+ * @brief [sEstadiaDiaria REMOVER ESTADIA - Realiza la baja logica de la estadia poniendo en TRUE[1] un determinado subindice del campo 'espacioVacio' del array de estadias]
  *
  * @param listaEstadias
- * @param length
+ * @param lengthEstadias
  * @param id
- * @return Retorna un NUMERO ENTERO: [-1] si hubo un error / [0] si realizo la baja logica
  */
-void removerEstadia(sEstadiaDiaria* listaEstadias, int lengthEstadias, int id)
+void sEstadiaDiaria_removerEstadia(sEstadiaDiaria* listaEstadias, int lengthEstadias, int id)
 {
 
 	for (int i = 0; i < lengthEstadias; ++i)
@@ -120,16 +116,18 @@ void removerEstadia(sEstadiaDiaria* listaEstadias, int lengthEstadias, int id)
 
 
 
+
+
 /**
- * @fn int buscarEstadiaPorId(sEstadiaDiaria*, int, int)
- * @brief [Buscar Estadia Por ID - Realiza una busqueda de la estadia que contenga el ID ingresado por el usuario]
+ * @fn int sEstadiaDiaria_buscarEstadiaPorId(sEstadiaDiaria*, int, int)
+ * @brief [sEstadiaDiaria BUSCAR ESTADIA POR ID - Realiza una busqueda de la estadia que contenga el ID ingresado por el usuario]
  *
  * @param listaEstadias
- * @param length
+ * @param lengthEstadias
  * @param id
- * @return Retorna un NUMERO ENTERO: [-1] si hubo un error / index n° [x] si encontro la posicion en el array del ID
+ * @return Retorna un NUMERO ENTERO: [-1] si hubo un error / index [x] si encontro la posicion en el array del ID
  */
-int buscarEstadiaPorId(sEstadiaDiaria* listaEstadias, int lengthEstadias, int id)
+int sEstadiaDiaria_buscarEstadiaPorId(sEstadiaDiaria* listaEstadias, int lengthEstadias, int id)
 {
 	int index = -1;
 
@@ -158,7 +156,13 @@ int buscarEstadiaPorId(sEstadiaDiaria* listaEstadias, int lengthEstadias, int id
 
 
 
-
+/**
+ * @fn void sEstadiaDiaria_ordenarFechas(sEstadiaDiaria*, int)
+ * @brief [sEstadiaDiaria ORDENAR FECHAS - Realiza un swap de las fechas del array de estadias]
+ *
+ * @param listaEstadias
+ * @param indexEstadia
+ */
 void sEstadiaDiaria_ordenarFechas(sEstadiaDiaria* listaEstadias, int indexEstadia)
 {
 	int auxFecha;
@@ -179,6 +183,15 @@ void sEstadiaDiaria_ordenarFechas(sEstadiaDiaria* listaEstadias, int indexEstadi
 
 
 
+
+
+/**
+ * @fn void sEstadiaDiaria_ordenarIDs(sEstadiaDiaria*, int)
+ * @brief [sEstadiaDiaria ORDENAR IDs - Realiza un swap de los IDs de estadias del array de estadias]
+ *
+ * @param listaEstadias
+ * @param indexEstadia
+ */
 void sEstadiaDiaria_ordenarIDs(sEstadiaDiaria* listaEstadias, int indexEstadia)
 {
 	int auxID;
@@ -191,6 +204,14 @@ void sEstadiaDiaria_ordenarIDs(sEstadiaDiaria* listaEstadias, int indexEstadia)
 
 
 
+
+/**
+ * @fn void sEstadiaDiaria_ordenarIDsPerros(sEstadiaDiaria*, int)
+ * @brief [sEstadiaDiaria ORDENAR IDs PERROS - Realiza un swap de los IDs de perros del array de estadias]
+ *
+ * @param listaEstadias
+ * @param indexEstadia
+ */
 void sEstadiaDiaria_ordenarIDsPerros(sEstadiaDiaria* listaEstadias, int indexEstadia)
 {
 	int auxIDPerro;
@@ -202,6 +223,15 @@ void sEstadiaDiaria_ordenarIDsPerros(sEstadiaDiaria* listaEstadias, int indexEst
 
 
 
+
+
+/**
+ * @fn void sEstadiaDiaria_ordenarIDsDuenios(sEstadiaDiaria*, int)
+ * @brief [sEstadiaDiaria ORDENAR IDs DUENIOS - Realiza un swap de los IDs de duenios del array de estadias]
+ *
+ * @param listaEstadias
+ * @param indexEstadia
+ */
 void sEstadiaDiaria_ordenarIDsDuenios(sEstadiaDiaria* listaEstadias, int indexEstadia)
 {
 	int auxIDDuenio;
@@ -210,28 +240,6 @@ void sEstadiaDiaria_ordenarIDsDuenios(sEstadiaDiaria* listaEstadias, int indexEs
 	listaEstadias[indexEstadia].idDuenio = listaEstadias[indexEstadia+1].idDuenio;
 	listaEstadias[indexEstadia+1].idDuenio = auxIDDuenio;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

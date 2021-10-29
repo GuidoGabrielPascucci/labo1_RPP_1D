@@ -5,26 +5,18 @@
 #include <string.h>
 #include <ctype.h>
 
-
-#include "Estadia.h"
-#include "Nexo.h"
 #include "Inputs.h"
 
 
 
 
+
 /**
- * @fn int verificarCancelacionDeEstadia(sEstadiaDiaria*, int, int)
- * @brief [Verificar Cancelacion de Estadia - Validacion de seguridad para confirmar la cancelacion de la estadia o para deshacer los cambios]
+ * @fn int verificarCancelacionDeEstadia(void)
+ * @brief [VERIFICAR CANCELACION DE ESTADIA - Validacion de seguridad para confirmar la cancelacion de la estadia o para deshacer los cambios]
  *
- * @param listaEstadias
- * @param length
- * @param indexDelId
- * @return Retorna un NUMERO ENTERO: [-1] si se confirma la cancelacion / [0] si no se cancela la estadia
+ * @return Retorna un NUMERO ENTERO: [1] si se confirma la cancelacion / [2] si no se cancela la estadia
  */
-
-
-
 int verificarCancelacionDeEstadia(void)
 {
 	int option = getIntInMinMaxRange("\n\n---------------------------------------------------------------------------------------------------------------------------------\n"
@@ -32,16 +24,15 @@ int verificarCancelacionDeEstadia(void)
 									 "Confirmas que quieres cancelar esta estadia?\n"
 									 "---------------------------------------------------------------------------------------------------------------------------------\n"
 									 "1. SI, confirmar la cancelacion de la estadia\n"
-									 "0. NO, Deshacer los cambios y volver atras\n\n",
+									 "2. NO, quiero mantener esta estadia\n\n\n",
 
 									 "\n\n---------------------------------------------------------------------------------------------------------------------------------\n"
-									 "ERROR !\n"
-									 "La opcion ingresada es invalida. Por favor reingrese una opcion\n"
+									 "ERROR! <<La opcion ingresada no es valida>> Por favor reingrese una opcion...\n"
 									 "Verificacion de seguridad\n"
 									 "Confirmas que quieres cancelar esta estadia?\n"
 									 "---------------------------------------------------------------------------------------------------------------------------------\n"
 									 "1. SI, confirmar la cancelacion de la estadia\n"
-									 "0. NO, deshacer los cambios y volver atras\n\n", 0, 1);
+									 "2. NO, quiero mantener esta estadia\n\n\n", 1, 2);
 
 
 	return option;
@@ -51,15 +42,13 @@ int verificarCancelacionDeEstadia(void)
 
 
 
-
-
 /**
- * @fn int verificarModificacionPerro(void)
- * @brief [Verificar Modificacion Perro - Validacion de seguridad para confirmar la modificacion del perro en una estadia]
+ * @fn int verificarModificacionDeEstadia(void)
+ * @brief [VERIFICAR MODIFICACION DE ESTADIA - Validacion de seguridad para confirmar la modificacion del perro en una estadia]
  *
  * @return Retorna un NUMERO ENTERO: [1] si se realiza la modificacion / [2] si no se realiza la modificacion
  */
-int verificarModificacionPerro(void)
+int verificarModificacionDeEstadia(void)
 {
 	int verificacion;
 
@@ -70,10 +59,11 @@ int verificarModificacionPerro(void)
 									   "1. SI, deseo realizar la modificacion y guardar los cambios\n"
 									   "2. NO, deshacer los cambios y volver atras\n\n\n",
 
-									   "ERROR ! Esa opcion es invalida. Por favor vuelve a ingresar la opcion correspondiente\n"
-									   "Confirmas que quieres realizar la modificacion?\n\n"
-									   "1. SI, deseo realizar la modificacion y guardar los cambios\n"
-									   "2. NO, deshacer los cambios y volver atras\n\n\n", 1, 2);
+									   "ERROR! <<La opcion ingresada no es valida>> Por favor reingrese una opcion...\n"
+									   "Confirmas que quieres realizar la modificacion?\n"
+									   "---------------------------------------------------------------------------------------------------------------------------------\n"
+									   "1. SI, confirmar la modificacion y guardar los cambios\n"
+									   "2. NO, cancelar\n\n\n", 1, 2);
 
 	return verificacion;
 }
@@ -84,7 +74,7 @@ int verificarModificacionPerro(void)
 
 /**
  * @fn int validacionNumerica(int)
- * @brief [Validacion Numerica - Valida que solo se puedan ingresar numeros]
+ * @brief [VALIDACION NUMERICA - Valida que solo se puedan ingresar numeros]
  *
  * @param number
  * @return Retorna un NUMERO ENTERO: [-1] si hay error / [0] si el numero ingresado es un digito del 0 al 9
@@ -106,10 +96,9 @@ int validacionNumerica(int number)
 
 
 
-
 /**
  * @fn int stringValidation(char*, int)
- * @brief [String Validation - Valida que la cadena de caracteres contenga solo letras del alfabeto, y no contenga simbolos ni numeros]
+ * @brief [STRING VALIDATION - Valida que la cadena de caracteres contenga solo letras del alfabeto, y no contenga simbolos ni numeros]
  *
  * @param string
  * @param length
@@ -148,17 +137,6 @@ int stringValidation(char* string, int length)
 
 	return functionValue;
 }
-
-
-
-
-
-
-
-
-
-
-
 
 
 
