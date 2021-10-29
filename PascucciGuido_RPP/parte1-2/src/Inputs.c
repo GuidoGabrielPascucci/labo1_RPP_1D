@@ -9,6 +9,7 @@
 
 
 
+
 /**
  * @fn int getIntInMinMaxRange(char*, char*, int, int)
  * @brief [GET INT IN MIN MAX RANGE - Permite al usuario ingresar un numero entero en un rango de un numero minimo y un numero maximo]
@@ -102,140 +103,6 @@ void getString(char* string, char* message, char* errorMessage, int max)
 
 	strcpy(string, notValidateString);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-int pedirDatos(sEstadiaDiaria* listaEstadias, sPerro* perritos, int length, int* contadorId)
-{
-	int valorDeFuncion = -1;
-	int index;
-
-	if ( (listaEstadias != NULL && perritos != NULL) && (length > -1) )
-	{
-
-		index = buscarEspacioLibre(listaEstadias, length);
-
-		if (index != -1)
-		{
-			printf("\n\n------------------------------------------------------------------------------------------------\n"
-					"Por favor complete los siguientes datos:\n"
-					"------------------------------------------------------------------------------------------------\n");
-
-
-
-
-			listaEstadias[index].id = generarId(*contadorId);
-			getString(listaEstadias[index].nombreDuenio, "Nombre del dueño: ", "Error. Por favor reingrese el nombre del dueño: ", MAX_NOMBRE); // MAXIMO DEL NOMBRE DEL DUEÑO?
-			listaEstadias[index].telefonoContacto = pedirTelefonoDeContacto(listaEstadias, length, index);
-			pedirFecha(listaEstadias, index);
-			listaEstadias[index].espacioVacio = FALSE;
-
-			valorDeFuncion = 0;
-
-			printf("\n\n************************************************************************************************\n"
-					"Estadia agregada exitosamente !\n"
-					"************************************************************************************************\n\n");
-			system("pause");
-
-		}
-		else
-		{
-			printf("\n\nERROR !\nNo hay espacio disponible para agregar perros.\n\n\n");
-			system("pause");
-		}
-
-	}
-	else
-	{
-		printf("\nERROR !\nDatos invalidos. Por favor intente nuevamente\n\n\n\n");
-		system("pause");
-	}
-
-
-	return valorDeFuncion;
-}
-*/
-
-
-
-
-
-
-
-
-
-
-
-/*
-void cargarPerrito(sPerro* listaPerritos, int length, int index)
-{
-
-	getString(listaPerritos[index].nombre, "Ingrese nombre del perrito: ", "ERROR ! Ese nombre no es valido. Por favor reingrese un nombre: ", MAX_NOMBRE);
-	getString(listaPerritos[index].raza, "Ingrese la raza: ", "ERROR ! Esa raza no es valida. Por favor reingrese la raza: ", MAX_NOMBRE);
-	listaPerritos[index].edad = getIntInMinMaxRange("Ingrese la edad: ", "ERROR ! Esa edad no es valida. Por favor reingrese la edad: ", 0, 20);
-
-	listaPerritos[index].id;
-
-	listaPerritos[index].espacioVacio = FALSE;
-
-}
-*/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
